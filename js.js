@@ -1,4 +1,9 @@
 $(function () {
+  var startTime = new Date();
+  var endTime = new Date();
+  endTime.setMinutes(startTime.getMinutes() + 15);
+  var endDateStr = endTime.getFullYear() + '-' + (endTime.getMonth() +1) + '-' + endTime.getDate();
+  var endTimeStr = endTime.getHours() + ':' + endTime.getMinutes() + ':' + endTime.getMilliseconds();
   const hint_ = '#hint';
   const backstory_ = '#backstory';
   const container_ = '#container';
@@ -8,24 +13,30 @@ $(function () {
     'cat', 'clear', 'clock', 'date', 'echo', 'help', 'uname', 'whoami', 'su'
   ];
   //create file objects, file name and file contents.IN THE FUTURE LOGS????
+    const FILES2_ = [
+    {name:'logfile_' + endDateStr + '.txt', text = '<div>' + endDateStr + ' ' + endTimeStr + '| invalid password for user "admin"</div><div>' + endDateStr + ':11:04:34| unknown command "Password1"</div>'}, 
+    {name:'logfile_' + endDateStr + '.txt', text = '<div>' + endDateStr + ' ' + endTimeStr + '| invalid password for user "admin"</div><div>' + endDateStr + ':11:04:34| unknown command "Password1"</div>'}, 
+    {name:'report1.doc', text = ``}, 
+    {name:'web.config', text = ``}
+  ];
   const FILES_ = [
-    'logfile_2018-01-20.txt', 'logfile_2018-06-2.txt', 'report1.doc', 'web.config'
+    'logfile_' + endDateStr + '.txt', 'logfile_' + endDateStr + '.txt', 'report1.doc', 'web.config'
   ];
   const USERS = [
     'admin', 'report', 'logviewer', 'guest'
   ];
   const HACKERHISTORY_ = `<div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
-        <div><input class="cmdline" value="cat logfile_2018-01-20.txt" readonly=""></div></div>
+        <div><input class="cmdline" value="cat logfile_` + endDateStr + `.txt" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
-        <div><input class="cmdline" value="cp logfile_2018-01-20.txt /media" readonly=""></div></div>
+        <div><input class="cmdline" value="cp logfile_` + endDateStr + `.txt /media" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
         <div><input class="cmdline" value="empty!" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
-        <div><input class="cmdline" value="delete logfile_2018-01-20.txt" readonly=""></div></div>
+        <div><input class="cmdline" value="delete logfile_` + endDateStr + `.txt" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
         <div><input class="cmdline" value="unknown command : delete" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
-        <div><input class="cmdline" value="rm logfile_2018-01-21.txt" readonly=""></div></div>
+        <div><input class="cmdline" value="rm logfile_` + endDateStr + `.txt" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
         <div><input class="cmdline" value="logout" readonly=""></div></div>`;
 
@@ -111,7 +122,7 @@ $(function () {
             hideHint();
           }
           else {
-            showDialogue('You', "The dates don't seem right",5000);
+            showDialogue('You', "The dates don't seem right", 5000);
             beenLS = true;
           }
           break;
@@ -124,14 +135,14 @@ $(function () {
         case 'date':
           var date = new Date();
           date.setFullYear(date.getFullYear() + currentDateYear);
-          if (!beenDate){
-            showDialogue('You',"This can't be right....",5000);
+          if (!beenDate) {
+            showDialogue('You', "This can't be right....", 5000);
           }
           output('<p>' + date + '</p>');
           break;
         case 'cat':
           if (!args[1]) {
-            output('Usage: ' + cmd + 'fileToOpen.txt');
+            output('Usage: ' + cmd + ' fileToOpen.txt');
           }
           else {
             openFile(args[1]);
@@ -168,7 +179,7 @@ $(function () {
 
   function openFile(e) {
     switch (e) {
-      case 'logfile_2018-01-20.txt':
+      case 'logfile_' + endDateStr + '.txt':
         output(printLogFile1());
         break;
     }
@@ -184,7 +195,7 @@ $(function () {
         //todays date on the logs
         break;
     }
-    return '<div>2018-02-03:11:04:34| invalid password for user "admin"</div><div>2018-02-03:11:04:34| unknown command "Password1"</div>'
+    return '<div>' + endDateStr + ':11:04:34| invalid password for user "admin"</div><div>' + endDateStr + ':11:04:34| unknown command "Password1"</div>'
   };
 
   function output(e) {

@@ -1,8 +1,21 @@
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="js.js"></script>
+
+  <title>
+</title>
+</head>
+<body>
 <div id="backstory">
   As you walk past the server room, you notice the door is ajar. You walk in confidently expecting to see Jeff in there, but the room is empty. A server display is open. Thoughts fill your head, anxiously you approach the display, and notice that the display is conencted to a server with top secret clearance, and whomever was using it, left a trace of their last commands.
 </br></br>
 <input type="button" id="openTerminal" value="OPEN TERMINAL" />
 </div>
+<div id="hint"><div>HINT:</div><div id="hint-text"></div></div>
 
 <div id="container">
   <div class="help-info">Enter "help" for more information</div>
@@ -24,3 +37,12 @@
     <li>possibly look at connected devices</li>
   </ul>
 </div>
+
+<div id="dialogue">
+  <div id="character-photo-container">
+    <img id="character-photo" src="http://www.blog.vixels.net/portraits/m7.jpg" />
+  </div>
+  <div id="dialogue-text"></div>
+</div>
+</body>
+</html>
