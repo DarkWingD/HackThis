@@ -1,30 +1,31 @@
 $(function () {
   function checkTime(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
-}
+    if (i < 10) {
+      i = "0" + i;
+    }
+    return i; }
 
-function startTime() {
-  var today = new Date();
-  var h = today.getHours();
-  var m = today.getMinutes();
-  var s = today.getSeconds();
-  // add a zero in front of numbers<10
-  m = checkTime(m);
-  s = checkTime(s);
-  document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
-  t = setTimeout(function() {
-    startTime()
-  }, 500);
-}
-startTime();
+  function startClock() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    // add a zero in front of numbers<10
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+    t = setTimeout(function () {
+      startClock()
+    }, 500); }
+  startClock();
+
+  //Time based vars
   var startTime = new Date();
   var endTime = new Date();
   endTime.setMinutes(startTime.getMinutes() + 15);
-  var endDateStr = endTime.getFullYear() + '-' + (endTime.getMonth() +1) + '-' + endTime.getDate();
+  var endDateStr = endTime.getFullYear() + '-' + (endTime.getMonth() + 1) + '-' + endTime.getDate();
   var endTimeStr = endTime.getHours() + ':' + endTime.getMinutes() + ':' + endTime.getMilliseconds();
+
   const hint_ = '#hint';
   const backstory_ = '#backstory';
   const container_ = '#container';
@@ -41,12 +42,8 @@ startTime();
   //   {name:'report1.doc', text = ``}, 
   //   {name:'web.config', text = ``}
   // ];
-  const FILES_ = [
-    'logfile_' + endDateStr + '.txt', 'logfile_' + endDateStr + '.txt', 'report1.doc', 'web.config'
-  ];
-  const USERS = [
-    'admin', 'report', 'logviewer', 'guest'
-  ];
+  const FILES_ = ['logfile_' + endDateStr + '.txt', 'logfile_' + endDateStr + '.txt', 'report1.doc', 'web.config'];
+  const USERS = ['admin', 'report', 'logviewer', 'guest'];
   const HACKERHISTORY_ = `<div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
         <div><input class="cmdline" value="cat logfile_` + endDateStr + `.txt" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
@@ -90,7 +87,7 @@ startTime();
 
   $('#input-line .prompt').html(currentUser + currentSystem);
   var cmdLine_ = document.querySelector('#input-line .cmdline');
-  var output_ = document.querySelector('#container output');
+  var output_ = document.querySelector(container_ +' output');
 
   //cmdLine_.addEventListener('click', inputTextClick_, false);
   //cmdLine_.addEventListener('keydown', historyHandler_, false);
