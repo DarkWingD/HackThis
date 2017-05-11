@@ -59,7 +59,21 @@ body{
   border: none;
   color: inherit;
 }
+#time{
+  width:100%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  position:fixed;
 
+  background-color: grey;
+  color:white;
+  font-weight: bold;
+  font-size: 25px;
+  height:40px;
+  top:0px;
+  left:0px;
+  text-align:right;
+}
 #container {
   padding: .1em 1.5em 1em 1em;
 }

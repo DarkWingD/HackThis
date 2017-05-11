@@ -1,4 +1,25 @@
 $(function () {
+  function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
+}
+
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  // add a zero in front of numbers<10
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+  t = setTimeout(function() {
+    startTime()
+  }, 500);
+}
+startTime();
   var startTime = new Date();
   var endTime = new Date();
   endTime.setMinutes(startTime.getMinutes() + 15);
@@ -8,6 +29,7 @@ $(function () {
   const backstory_ = '#backstory';
   const container_ = '#container';
   const dialogue_ = '#dialogue';
+  const time_ = '#time';
   //create command objects with help text as param and command as another.
   const CMDS_ = [
     'cat', 'clear', 'clock', 'date', 'echo', 'help', 'uname', 'whoami', 'su'
@@ -64,6 +86,7 @@ $(function () {
   $(container_).hide();
   $(dialogue_).hide();
   $(hint_).hide();
+  $(time_).hide();
 
   $('#input-line .prompt').html(currentUser + currentSystem);
   var cmdLine_ = document.querySelector('#input-line .cmdline');
@@ -218,6 +241,7 @@ $(function () {
 
   $('#openTerminal').click(function () {
     hideBlurb();
+    $(time_).show('slow');
     setTimeout(function () { showDialogue('You', 'What the?', 5000); }, 3000);
     setTimeout(function () { showDialogue('You', 'What is this?', 5000); }, 10000);
     setTimeout(function () { showDialogue('You', 'Looks like someone has been looking at the server logs.', 5000); }, 17000);
