@@ -13,12 +13,12 @@ $(function () {
     'cat', 'clear', 'clock', 'date', 'echo', 'help', 'uname', 'whoami', 'su'
   ];
   //create file objects, file name and file contents.IN THE FUTURE LOGS????
-    const FILES2_ = [
-    {name:'logfile_' + endDateStr + '.txt', text = '<div>' + endDateStr + ' ' + endTimeStr + '| invalid password for user "admin"</div><div>' + endDateStr + ':11:04:34| unknown command "Password1"</div>'}, 
-    {name:'logfile_' + endDateStr + '.txt', text = '<div>' + endDateStr + ' ' + endTimeStr + '| invalid password for user "admin"</div><div>' + endDateStr + ':11:04:34| unknown command "Password1"</div>'}, 
-    {name:'report1.doc', text = ``}, 
-    {name:'web.config', text = ``}
-  ];
+  //   const FILES2_ = [
+  //   {name:'logfile_' + endDateStr + '.txt', text = '<div>' + endDateStr + ' ' + endTimeStr + '| invalid password for user "admin"</div><div>' + endDateStr + ':11:04:34| unknown command "Password1"</div>'}, 
+  //   {name:'logfile_' + endDateStr + '.txt', text = '<div>' + endDateStr + ' ' + endTimeStr + '| invalid password for user "admin"</div><div>' + endDateStr + ':11:04:34| unknown command "Password1"</div>'}, 
+  //   {name:'report1.doc', text = ``}, 
+  //   {name:'web.config', text = ``}
+  // ];
   const FILES_ = [
     'logfile_' + endDateStr + '.txt', 'logfile_' + endDateStr + '.txt', 'report1.doc', 'web.config'
   ];
