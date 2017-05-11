@@ -7,25 +7,25 @@ $(function () {
   const CMDS_ = [
     'cat', 'clear', 'clock', 'date', 'echo', 'help', 'uname', 'whoami', 'su'
   ];
-  //create file objects, file name and file contents.
+  //create file objects, file name and file contents.IN THE FUTURE LOGS????
   const FILES_ = [
-    'logfile_2015-01-20.txt', 'logfile_2015-06-2.txt', 'report1.doc', 'web.config'
+    'logfile_2018-01-20.txt', 'logfile_2018-06-2.txt', 'report1.doc', 'web.config'
   ];
   const USERS = [
     'admin', 'report', 'logviewer', 'guest'
   ];
   const HACKERHISTORY_ = `<div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
-        <div><input class="cmdline" value="cat logfile_2015-01-20.txt" readonly=""></div></div>
+        <div><input class="cmdline" value="cat logfile_2018-01-20.txt" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
-        <div><input class="cmdline" value="cp logfile_2015-01-20.txt /media" readonly=""></div></div>
+        <div><input class="cmdline" value="cp logfile_2018-01-20.txt /media" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
         <div><input class="cmdline" value="empty!" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
-        <div><input class="cmdline" value="delete logfile_2015-01-20.txt" readonly=""></div></div>
+        <div><input class="cmdline" value="delete logfile_2018-01-20.txt" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
         <div><input class="cmdline" value="unknown command : delete" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
-        <div><input class="cmdline" value="rm logfile_2015-01-21.txt" readonly=""></div></div>
+        <div><input class="cmdline" value="rm logfile_2018-01-21.txt" readonly=""></div></div>
         <div><div class="input-line line"><div class="prompt">admin@svr-1A89:/# </div>
         <div><input class="cmdline" value="logout" readonly=""></div></div>`;
 
@@ -66,10 +66,11 @@ $(function () {
   function processInput(e) {
     //manage history
     if (e.keyCode == 9) {//tab
-      e.preventDefault(); 
-      var incomplete = this.value;
+      e.preventDefault();
+      var args = this.value.split(' ');
+      var incomplete = args[1];
       var result = isInArray(incomplete, FILES_);
-      this.value = result;
+      this.value = args[0] + ' ' + result;
     }
     else if (e.keyCode == 38) {//up		
       this.value = history_[history_.length - histpos_];
@@ -97,18 +98,22 @@ $(function () {
       var cmd = args[0];
       switch (cmd) {
         case 'su':
-          if (!args[2]){
+          if (!args[2]) {
             output('Usage: ' + cmd + ' username password');
           }
           else {
-            if (validateLogin(args[1], args[2])){
-
-            }
+            validateLogin(args[1], args[2]);
           }
           break;
         case 'ls':
-          hideHint();
           output('<div class="ls-files">' + FILES_.join('<br>') + '</div>');
+          if (beenLS) {
+            hideHint();
+          }
+          else {
+            showDialogue('You', "The dates don't seem right",5000);
+            beenLS = true;
+          }
           break;
         case 'help':
           output('<div class="ls-files">' + CMDS_.join('<br>') + '</div>');
@@ -119,15 +124,24 @@ $(function () {
         case 'date':
           var date = new Date();
           date.setFullYear(date.getFullYear() + currentDateYear);
+          if (!beenDate){
+            showDialogue('You',"This can't be right....",5000);
+          }
           output('<p>' + date + '</p>');
           break;
         case 'cat':
-          showHint('Pressing TAB key will complete the file name if it is unique.');
           if (!args[1]) {
             output('Usage: ' + cmd + 'fileToOpen.txt');
           }
           else {
             openFile(args[1]);
+          }
+          if (beenCat) {
+            hideHint();
+          }
+          else {
+            showHint('Pressing TAB key will complete the file name if it is unique.');
+            beenCat = true;
           }
           break;
         default:
@@ -139,9 +153,12 @@ $(function () {
     }
   };
 
-  function validateLogin(uname,pword){
-    if (uname == 'admin' && pword == 'Password1'){
-      c
+  function validateLogin(uname, pword) {
+    if (uname == 'admin' && pword == 'Password1') {
+      setCurrentUser(uname);
+    }
+    else {
+      output('Invalid credentials');
     }
   };
 
@@ -151,21 +168,23 @@ $(function () {
 
   function openFile(e) {
     switch (e) {
-      case 'logfile_2015-01-20.txt':
+      case 'logfile_2018-01-20.txt':
         output(printLogFile1());
         break;
     }
   };
 
-  function doesFileExist(fileName){
+  function doesFileExist(fileName) {
     return true;
   };
 
   function printLogFile1(fileName) {
-    switch(fileName){
-      case ''
+    switch (fileName) {
+      case '':
+        //todays date on the logs
+        break;
     }
-    return '<div>2015-02-03:11:04:34| invalid password for user "admin"</div><div>2015-02-03:11:04:34| unknown command "Password1"</div>'
+    return '<div>2018-02-03:11:04:34| invalid password for user "admin"</div><div>2018-02-03:11:04:34| unknown command "Password1"</div>'
   };
 
   function output(e) {
@@ -222,11 +241,17 @@ $(function () {
 
   function isInArray(s, array) {
     //if(array.some(function(i){return (new RegExp()).text(s);}))
+    var returnIndex = 0;
+    var results = 0;
     for (var i = 0; i < array.length; i++) {
-      if (new RegExp('\\b' + array[i] + '\\b').text(s)) {
-        return array[i];
+      if (array[i].startsWith(s)) {
+        returnIndex = i;
+        results++;
       }
     };
+    if (results == 1) {
+      return array[returnIndex];
+    }
   };
 
   function generateHackerHistory() {
